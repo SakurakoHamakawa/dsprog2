@@ -58,10 +58,10 @@ class CalculatorApp(ft.Container):
         # 表示画面の設定
         # 計算結果を表示する画面を設定
         self.result = ft.Text(value="0", color=ft.colors.WHITE, size=40)
-        self.width = 500
+        self.width = 600
         self.bgcolor = ft.colors.BLACK
         self.border_radius = ft.border_radius.all(20)
-        self.padding = 20
+        self.padding = 30
         # UIのレイアウト設定
         # 各種ボタンと行・列のレイアウトを設定
         self.content = ft.Column(
