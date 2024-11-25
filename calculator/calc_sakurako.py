@@ -1,8 +1,8 @@
 import flet as ft
 import math
 
-# # クラス: CalcButton
-# 数字や演算子ボタンの基本クラス。ボタンの基本的なプロパティを設定。
+# クラス: CalcButton
+# 数字や演算子ボタンの基本クラス。ボタンの基本的なプロパティを設定
 class CalcButton(ft.ElevatedButton):
     def __init__(self, text, button_clicked, expand=1):
         super().__init__()
@@ -11,55 +11,55 @@ class CalcButton(ft.ElevatedButton):
         self.on_click = button_clicked
         self.data = text
 
-# # クラス: DigitButton
-# 数字ボタン専用クラス。スタイルを設定。
+# クラス: DigitButton
+# 数字ボタン専用クラス。スタイルを設定
 class DigitButton(CalcButton):
     def __init__(self, text, button_clicked, expand=1):
         CalcButton.__init__(self, text, button_clicked, expand)
         self.bgcolor = ft.colors.WHITE24
         self.color = ft.colors.WHITE
 
-# # クラス: ActionButton
-# 演算ボタン専用クラス (+, -, *, /, =) のスタイルを設定。
+# クラス: ActionButton
+# 演算ボタン専用クラス (+, -, *, /, =) のスタイルを設定
 class ActionButton(CalcButton):
     def __init__(self, text, button_clicked):
         CalcButton.__init__(self, text, button_clicked)
         self.bgcolor = ft.colors.ORANGE
         self.color = ft.colors.WHITE
 
-# # クラス: ExtraActionButton
-# 追加アクションボタン用クラス (AC, +/-, %) のスタイルを設定。
+# クラス: ExtraActionButton
+# 追加アクションボタン用クラス (AC, +/-, %) のスタイルを設定
 class ExtraActionButton(CalcButton):
     def __init__(self, text, button_clicked):
         CalcButton.__init__(self, text, button_clicked)
         self.bgcolor = ft.colors.BLUE_GREY_100
         self.color = ft.colors.BLACK
 
-# # クラス: ScientificButton
-# 科学計算用ボタン専用クラス (sin, cos, tan, ln, etc.) のスタイルを設定。
+# クラス: ScientificButton
+# 科学計算用ボタン専用クラス (sin, cos, tan, ln, etc.) のスタイルを設定
 class ScientificButton(CalcButton):
     def __init__(self, text, button_clicked):
         CalcButton.__init__(self, text, button_clicked)
         self.bgcolor = ft.colors.GREY
         self.color = ft.colors.WHITE
 
-# # クラス: CalculatorApp
+# クラス: CalculatorApp
 # 電卓のメインロジックとUIを管理。
 class CalculatorApp(ft.Container):
     def __init__(self):
         super().__init__()
-        self.reset()  # 初期化メソッドを呼び出し、状態をリセット。
+        self.reset()  # 初期化メソッドを呼び出し、状態をリセット
 
-        # # 表示画面の設定
-        # 計算結果を表示する画面を設定。
+        # 表示画面の設定
+        # 計算結果を表示する画面を設定
         self.result = ft.Text(value="0", color=ft.colors.WHITE, size=40)
         self.width = 500
         self.bgcolor = ft.colors.BLACK
         self.border_radius = ft.border_radius.all(20)
         self.padding = 20
 
-        # # UIのレイアウト設定
-        # 各種ボタンと行・列のレイアウトを設定。
+        # UIのレイアウト設定
+        # 各種ボタンと行・列のレイアウトを設定
         self.content = ft.Column(
             controls=[
                 # 計算結果表示エリア
@@ -151,7 +151,7 @@ class CalculatorApp(ft.Container):
             ]
         )
 
-    # # ボタンが押された時の動作を定義
+    # ボタンが押された時の動作を定義
     def button_clicked(self, e):
         data = e.control.data
         print(f"Button clicked with data = {data}")
@@ -230,16 +230,16 @@ class CalculatorApp(ft.Container):
                     )
                 elif data == "10^x":
                     self.result.value = self.format_number(math.pow(10
-        # # 画面の更新
+        # 画面の更新
         # 計算結果が変更された場合にUIを更新
         self.update()
 
-    # # メソッド: format_number
+    # メソッド: format_number
     # 浮動小数点数をフォーマットし、小数部が0の場合は整数として表示
     def format_number(self, num):
         return int(num) if num % 1 == 0 else num
 
-    # # メソッド: calculate
+    # メソッド: calculate
     # 基本的な四則演算 (+, -, *, /) を実行
     # 割り算の際にゼロ除算エラーを防ぐ処理を追加
     def calculate(self, operand1, operand2, operator):
@@ -252,7 +252,7 @@ class CalculatorApp(ft.Container):
         elif operator == "/":
             return "Error" if operand2 == 0 else self.format_number(operand1 / operand2)
 
-    # # メソッド: reset
+    # メソッド: reset
     # 計算状態を初期化
     def reset(self):
         self.operator = "+"  # 初期演算子を "+" に設定
@@ -260,7 +260,7 @@ class CalculatorApp(ft.Container):
         self.new_operand = True  # 新しいオペランドを受け付ける状態に設定
 
 
-# # 関数: main
+# 関数: main
 # アプリのメインエントリーポイント
 # ページのレイアウトを設定し、CalculatorAppを追加
 def main(page: ft.Page):
@@ -276,6 +276,6 @@ def main(page: ft.Page):
     page.add(calc)
 
 
-# # アプリケーションの開始
+# アプリケーションの開始
 # Fletアプリケーションを起動し、main関数をターゲットとして指定
 ft.app(target=main)
