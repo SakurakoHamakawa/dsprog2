@@ -219,7 +219,7 @@ class CalculatorApp(ft.Container):
                 elif data == "e^x":
                     self.result.value = self.format_number(math.exp(value))
                 elif data == "π":
-                    self.result.value = math.pi
+                    self.result.value = self.format_number(math.pi)
                 elif data == "x^2":
                     self.result.value = self.format_number(math.pow(value, 2))
                 elif data == "x^3":
@@ -229,7 +229,10 @@ class CalculatorApp(ft.Container):
                         "Error" if value == 0 else self.format_number(1 / value)
                     )
                 elif data == "10^x":
-                    self.result.value = self.format_number(math.pow(10
+                    self.result.value = self.format_number(math.pow(10, value))
+            except:
+                self.result.value = "Error"
+
         # 画面の更新
         # 計算結果が変更された場合にUIを更新
         self.update()
