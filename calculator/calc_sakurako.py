@@ -43,6 +43,16 @@ class ScientificButton(CalcButton):
         self.bgcolor = ft.colors.GREY
         self.color = ft.colors.WHITE
 
+
+
+# クラス: CalculatorApp
+# 電卓のメインロジックとUIを管理するクラス
+class CalculatorApp(ft.Container):
+    def __init__(self):
+        super().__init__()
+        self.reset() # 初期化メソッドを呼び出し、状態をリセット
+        
+
 # クラス: CalculatorApp
 # 電卓のメインロジックとUIを管理。
 class CalculatorApp(ft.Container):
@@ -53,7 +63,7 @@ class CalculatorApp(ft.Container):
         # 表示画面の設定
         # 計算結果を表示する画面を設定
         self.result = ft.Text(value="0", color=ft.colors.WHITE, size=40)
-        self.width = 500
+        self.width = 600
         self.bgcolor = ft.colors.BLACK
         self.border_radius = ft.border_radius.all(20)
         self.padding = 20
@@ -64,7 +74,7 @@ class CalculatorApp(ft.Container):
             controls=[
                 # 計算結果表示エリア
                 ft.Row(controls=[self.result], alignment="end"),
-                
+
                 # アクションボタンの行 (AC, +/-, %, /)
                 ft.Row(
                     controls=[
@@ -79,7 +89,7 @@ class CalculatorApp(ft.Container):
                     ],
                     expand=True,
                 ),
-                
+
                 # 科学計算ボタンの行 (sin, cos, tan, ln, e^x)
                 ft.Row(
                     controls=[
@@ -91,6 +101,7 @@ class CalculatorApp(ft.Container):
                     ],
                     expand=True,
                 ),
+
 
                 # 科学計算ボタンの行 (π, x^2, x^3, 1/x, 10^x)
                 ft.Row(
@@ -114,7 +125,7 @@ class CalculatorApp(ft.Container):
                     ],
                     expand=True,
                 ),
-                
+
                 # 数字ボタンの行 (4, 5, 6, -)
                 ft.Row(
                     controls=[
@@ -155,7 +166,7 @@ class CalculatorApp(ft.Container):
     def button_clicked(self, e):
         data = e.control.data
         print(f"Button clicked with data = {data}")
-        
+
         # エラー状態やリセット時の処理
         if self.result.value == "Error" or data == "AC":
             self.result.value = "0"
@@ -187,12 +198,11 @@ class CalculatorApp(ft.Container):
                 self.operand1, float(self.result.value), self.operator
             )
             self.reset()
-
         # パーセント (%) 計算
         elif data == "%":
             self.result.value = float(self.result.value) / 100
             self.reset()
-
+            
         # +/- ボタン (符号の切り替え)
         elif data == "+/-":
             if float(self.result.value) > 0:
@@ -234,15 +244,16 @@ class CalculatorApp(ft.Container):
                 self.result.value = "Error"
 
         # 画面の更新
+        # 計算結果が変更された場合にUIを更新します
+        self.update()
+
         # 計算結果が変更された場合にUIを更新
         self.update()
 
-    # メソッド: format_number
     # 浮動小数点数をフォーマットし、小数部が0の場合は整数として表示
     def format_number(self, num):
         return int(num) if num % 1 == 0 else num
-
-    # メソッド: calculate
+      
     # 基本的な四則演算 (+, -, *, /) を実行
     # 割り算の際にゼロ除算エラーを防ぐ処理を追加
     def calculate(self, operand1, operand2, operator):
@@ -255,7 +266,7 @@ class CalculatorApp(ft.Container):
         elif operator == "/":
             return "Error" if operand2 == 0 else self.format_number(operand1 / operand2)
 
-    # メソッド: reset
+
     # 計算状態を初期化
     def reset(self):
         self.operator = "+"  # 初期演算子を "+" に設定
@@ -263,8 +274,6 @@ class CalculatorApp(ft.Container):
         self.new_operand = True  # 新しいオペランドを受け付ける状態に設定
 
 
-# 関数: main
-# アプリのメインエントリーポイント
 # ページのレイアウトを設定し、CalculatorAppを追加
 def main(page: ft.Page):
     # アプリケーションのタイトルを設定
@@ -273,6 +282,12 @@ def main(page: ft.Page):
     # ページの中央にコンテンツを配置
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
+
+    # ページの中央にコンテンツを配置
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+
 
     # 電卓アプリをインスタンス化し、ページに追加
     calc = CalculatorApp()
